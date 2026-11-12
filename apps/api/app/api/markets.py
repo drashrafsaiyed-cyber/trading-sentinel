@@ -3,9 +3,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, insert
 from app.core.db import get_db
 from app.models import Market, Candle, Prediction
-from app.core.data_ingestion import DataIngestionService, DataValidation
+from app.core.data_ingestion import DataIngestionService
 from app.core.indicators import TechnicalIndicators
 from app.core.ml_sentiment import SentimentPredictor
+from app.ai.factory import get_ai_provider
 from pydantic import BaseModel
 from datetime import datetime
 from typing import List
@@ -104,7 +105,7 @@ async def get_market_sentiment(symbol: str, db: AsyncSession = Depends(get_db)):
     if data is None or data.empty:
         raise HTTPException(status_code=400, detail="Could not fetch data")
 
-    predictor = SentimentPredictor()
+    predictor = SentimentPredictor(ai_provider=get_ai_provider())
     prediction_data = await predictor.predict(data, symbol)
 
     return {
@@ -130,7 +131,7 @@ async def compute_sentiment(symbol: str, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Could not fetch data for symbol")
 
     # Compute sentiment
-    predictor = SentimentPredictor()
+    predictor = SentimentPredictor(ai_provider=get_ai_provider())
     prediction_data = await predictor.predict(data, symbol)
 
     # Store in DB

@@ -161,6 +161,10 @@ Based on this technical analysis, respond with ONLY valid JSON (no markdown):
             result = await self.ai_provider.complete(prompt)
             response_text = result.content if hasattr(result, 'content') else str(result)
 
+            # Empty content = provider disabled/unavailable; use rule-based silently
+            if not response_text.strip():
+                return {'bull_score': bull_score, 'bear_score': bear_score}
+
             # Parse JSON from AI response
             try:
                 ai_result = json.loads(response_text)

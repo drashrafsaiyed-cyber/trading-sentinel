@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     # Trading
     yfinance_cache_hours: int = int(os.getenv("YFINANCE_CACHE_HOURS", "1"))
     backtest_lookback_days: int = int(os.getenv("BACKTEST_LOOKBACK_DAYS", "365"))
+    # Data source: "yfinance" (real, production) or "mock" (synthetic, offline dev)
+    data_source: str = os.getenv("DATA_SOURCE", "yfinance")
 
     # App
     environment: str = os.getenv("ENVIRONMENT", "development")

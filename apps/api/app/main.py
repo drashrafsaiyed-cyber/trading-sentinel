@@ -43,8 +43,15 @@ async def health():
 
 
 # Include routers
+from app.api.auth import router as auth_router
 from app.api.markets import router as markets_router
+from app.api.watchlists import router as watchlists_router
+from app.api.alerts import router as alerts_router
+
+app.include_router(auth_router)
 app.include_router(markets_router)
+app.include_router(watchlists_router)
+app.include_router(alerts_router)
 
 
 if __name__ == "__main__":

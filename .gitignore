@@ -27,3 +27,11 @@ apps/dashboard/.env.*.local
 Thumbs.db
 .env
 .env.local
+
+# runtime
+apps/api/server.log
+
+# python caches
+__pycache__/
+*.pyc
+.pytest_cache/

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Float, Integer, DateTime, Boolean, JSON, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, String, Float, Integer, BigInteger, DateTime, Boolean, JSON, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from datetime import datetime
@@ -31,7 +31,7 @@ class Candle(Base):
     high = Column(Float, nullable=False)
     low = Column(Float, nullable=False)
     close = Column(Float, nullable=False)
-    volume = Column(Integer, nullable=False)
+    volume = Column(BigInteger, nullable=False)
 
     market = relationship("Market", back_populates="candles")
 
@@ -51,7 +51,7 @@ class Indicator(Base):
     sma_20 = Column(Float)
     sma_50 = Column(Float)
     sma_200 = Column(Float)
-    volume_sma = Column(Integer)
+    volume_sma = Column(BigInteger)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     market = relationship("Market", back_populates="indicators")
