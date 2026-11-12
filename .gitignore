@@ -1,0 +1,29 @@
+# Backend
+apps/api/.venv/
+apps/api/__pycache__/
+apps/api/*.pyc
+apps/api/.pytest_cache/
+apps/api/.env
+apps/api/dist/
+apps/api/build/
+
+# Frontend
+apps/dashboard/node_modules/
+apps/dashboard/.next/
+apps/dashboard/out/
+apps/dashboard/build/
+apps/dashboard/.env.local
+apps/dashboard/.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.env
+.env.local
