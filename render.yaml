@@ -1,0 +1,37 @@
+# Render Blueprint — deploys the FastAPI backend.
+# In Render: New + → Blueprint → connect this repo → it reads this file.
+# Set the `sync: false` secrets in the dashboard after the first deploy.
+services:
+  - type: web
+    name: trading-sentinel-api
+    runtime: python
+    region: singapore          # closest free region to India; or "oregon"
+    plan: free
+    rootDir: apps/api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATA_SOURCE
+        value: yfinance
+      - key: AI_PROVIDER
+        value: nvidia
+      - key: NVIDIA_MODEL
+        value: meta/llama-3.1-70b-instruct
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: JWT_EXPIRATION_HOURS
+        value: "168"
+      - key: JWT_SECRET
+        generateValue: true     # Render generates a strong secret
+      # --- set these in the Render dashboard (Environment tab) ---
+      - key: DATABASE_URL        # Supabase transaction-pooler URL (port 6543)
+        sync: false
+      - key: NVIDIA_API_KEY      # optional — rule-based works without it
+        sync: false
+      - key: TELEGRAM_BOT_TOKEN  # optional — for alert delivery
+        sync: false
+      - key: CORS_ORIGINS        # your Vercel URL, e.g. https://trading-sentinel.vercel.app
+        sync: false

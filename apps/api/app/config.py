@@ -32,6 +32,9 @@ class Settings(BaseSettings):
     # App
     environment: str = os.getenv("ENVIRONMENT", "development")
     debug: bool = environment == "development"
+    # Comma-separated list of allowed frontend origins (production CORS).
+    # e.g. "https://trading-sentinel.vercel.app,https://app.tradingsentinel.ai"
+    cors_origins: str = os.getenv("CORS_ORIGINS", "")
 
     class Config:
         env_file = ".env"

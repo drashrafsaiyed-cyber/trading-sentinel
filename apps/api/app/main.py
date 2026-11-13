@@ -27,9 +27,18 @@ app = FastAPI(
 )
 
 # CORS
+if settings.cors_origins:
+    _origins = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
+elif settings.debug:
+    _origins = ["*"]
+else:
+    _origins = []
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] if settings.debug else ["https://trading-sentinel.vercel.app"],
+    allow_origins=_origins,
+    # Allow any *.vercel.app preview deploy of this project in addition to the list
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
