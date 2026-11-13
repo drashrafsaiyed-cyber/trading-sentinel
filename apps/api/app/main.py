@@ -26,20 +26,12 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS
-if settings.cors_origins:
-    _origins = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
-elif settings.debug:
-    _origins = ["*"]
-else:
-    _origins = []
-
+# CORS — token-based API (Bearer in Authorization header, no cookies),
+# so allowing all origins with credentials disabled is safe and bulletproof.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_origins,
-    # Allow any *.vercel.app preview deploy of this project in addition to the list
-    allow_origin_regex=r"https://.*\.vercel\.app",
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

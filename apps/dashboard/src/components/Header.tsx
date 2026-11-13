@@ -6,11 +6,7 @@ export default function Header() {
           <div className="text-2xl">📈</div>
           <h1 className="text-xl font-bold text-white">Trading Sentinel</h1>
         </div>
-        <nav className="flex gap-4 text-slate-300">
-          <a href="/" className="hover:text-white transition">Dashboard</a>
-          <a href="/watchlist" className="hover:text-white transition">Watchlist</a>
-          <a href="/settings" className="hover:text-white transition">Settings</a>
-        </nav>
+        <div className="text-sm text-slate-400">AI Bull/Bear Signals</div>
       </div>
     </header>
   )
